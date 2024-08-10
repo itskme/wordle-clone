@@ -87,4 +87,66 @@ function gameStart(){
 	let keyLayoutTop = 'QWERTYUIOP';
 	let keyLayoutMid = 'ASDFGHJKL';
 	let keyLayoutBot = 'ZXCVBNM';
+
+	let keyboard = document.createElement('div');
+	keyboard.id = 'keyboard';
+
+		let topKeys = document.createElement('div');
+		topKeys.id = 'topKeys';
+		addKeys(topKeys, keyLayoutTop, 'keyboardKey_s');
+		keyboard.append(topKeys);
+
+		let midKeys = document.createElement('div');
+		midKeys.id = 'midKeys';
+		addKeys(midKeys, keyLayoutMid, 'keyboardKey_m');
+		keyboard.append(midKeys);
+
+		let botKeys = document.createElement('div');
+		botKeys.id = 'botKeys';
+		let deleteKey = document.createElement('span');
+		deleteKey.className = 'keyboardKey_l';
+		deleteKey.innerHTML = '&#x2190;';
+		deleteKey.addEventListener("click", function deleteClick(event) {
+			if(gameFin == 0){
+				let wordRow = document.getElementsByClassName('row')[currentRow];
+				let rowBlockEl = wordRow.childNodes;
+				deleteLetter(rowBlockEl);
+			}
+		});
+		botKeys.append(deleteKey);
+		addKeys(botKeys, keyLayoutBot, 'keyboardKey_s');
+		let enterKey = document.createElement('span');
+		enterKey.className = 'keyboardKey_l';
+		enterKey.innerText = 'Enter';
+		enterKey.addEventListener("click", enterClick = function(event) {
+			if(gameFin == 0){
+				let wordRow = document.getElementsByClassName('row')[currentRow];
+				let rowBlockEl = wordRow.childNodes;
+				submitWord(wordRow);
+			}
+		});
+		botKeys.append(enterKey);
+		keyboard.append(botKeys);
+
+	container.append(keyboard);
+
+	let alphabet = 'abcdefghijklmnopqrstuvwxyz';
+	document.addEventListener('keyup', keyPress = function(event) {
+		if(gameFin == 0){
+			let wordRow = document.getElementsByClassName('row')[currentRow];
+			let rowBlockEl = wordRow.childNodes;
+			for(i = 0; i < alphabet.length; i++){
+				if ((event.key === alphabet[i] || event.key === alphabet[i].toUpperCase())) {
+					addLetter(rowBlockEl, alphabet[i]);
+				}
+			}
+			if (event.key === 'Enter') {
+				submitWord(wordRow, keyPress);
+			}
+			if (event.key === 'Backspace') {
+				deleteLetter(rowBlockEl);
+			}
+		}
+	});
 }
+
