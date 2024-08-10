@@ -18,3 +18,73 @@ document.body.append(container);
 
 gameStart();
 
+function gameOver(){
+	gameFin = 1;
+	document.removeEventListener('keyup', deleteClick, false);
+	document.removeEventListener('keyup', enterClick, false);
+	document.removeEventListener('keyup', keyPress, false);
+	document.removeEventListener('keyup', restart, false);
+	document.addEventListener('keyup', restart = function(event) {
+		if (event.key === 'Enter') {
+			document.removeEventListener('keyup', restart, false);
+			gameStart();
+		}
+	});
+}
+
+function gameStart(){
+	container.innerHTML = '';
+	gameFin = 0;
+	currentRow = 0;
+	nextRowBlock = 0;
+	score = 0;
+	remNotification = 0;
+	let rand = Math.floor(Math.random() * wordlist.length);
+	chosenWord = wordlist[rand];
+
+	let logo = document.createElement('div');
+	logo.className = 'logo';
+
+	let domName = 'ITSKME.WORDLE';
+	for(i = 0; i < domName.length; i++){
+		let spanClass = (i == 0 || i % 2 == 0)? 'logo_green' : 'logo_gold';
+		let logoSpan = document.createElement('span');
+		logoSpan.className = spanClass;
+		logoSpan.innerText = domName[i];
+		logo.append(logoSpan);
+	}
+
+	container.append(logo);
+
+	let navBar = document.createElement('div');
+	navBar.className = 'nav_bar';
+		let giveUpBtn = document.createElement('button');
+		giveUpBtn.id = 'giveUpBtn';
+		giveUpBtn.innerText = 'give up';
+		giveUpBtn.addEventListener("click", function quitClick(event) {
+			if(gameFin == 0){
+				notification.innerText = 'The word was ' + chosenWord + '. Press Enter to play again';
+				gameOver();
+			}
+		});
+	navBar.append(giveUpBtn);
+	container.append(navBar);
+
+	let gameArea = document.createElement('div');
+	gameArea.className = 'game_area';
+	for(i = 0; i < 6; i++){
+		let row = document.createElement('div');
+		row.className = 'row';
+		for(j = 0; j < 5; j++){
+			let rowBlock = document.createElement('div');
+			rowBlock.className = 'row_block';
+			row.append(rowBlock);
+		}
+		gameArea.append(row);
+	}
+	container.append(gameArea);
+
+	let keyLayoutTop = 'QWERTYUIOP';
+	let keyLayoutMid = 'ASDFGHJKL';
+	let keyLayoutBot = 'ZXCVBNM';
+}
