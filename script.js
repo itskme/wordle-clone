@@ -204,5 +204,54 @@ function submitWord(wordRow, keyPress){
 				}
 			}
 
-			
-}}}
+			if(score === 5){
+				notification.innerText = 'Well done, you won! Enter to play again';
+				gameOver();
+			}
+			else if(currentRow == 5){
+				notification.innerText = 'You lost. The word was ' + chosenWord + '. Press Enter to play again';
+				gameOver();
+			}
+			else{
+				score = 0;
+				nextRowBlock = 0;
+				currentRow++;
+			}
+		}else{
+			remNotification = 0;
+			notification.innerText = 'Word not in list';
+		}
+	}else{
+		remNotification = 0;
+		notification.innerText = 'You must enter 5 characters';
+	}
+}
+
+function addKeys(el, layout, keyClass){
+	for(i = 0; i < layout.length; i++){
+		let j = i;
+		let key = document.createElement('span');
+		key.className = keyClass;
+		key.id = 'keyboard_' + layout[i];
+		key.innerText = layout[i];
+		key.addEventListener("click", function keyboardPress(event) {
+			if(gameFin == 0){
+				let wordRow = document.getElementsByClassName('row')[currentRow];
+				let rowBlockEl = wordRow.childNodes;
+				addLetter(rowBlockEl, layout[j]);
+			}
+		});
+		el.append(key);
+	}
+}
+
+function addLetter(rowBlockEl, letter){
+	if(remNotification == 0){
+		remNotification = 1;
+		notification.innerText = '';
+	}
+	if(nextRowBlock < 5){
+		rowBlockEl[nextRowBlock].innerText = letter.toUpperCase();
+		nextRowBlock++;
+	}
+}
