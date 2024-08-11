@@ -150,3 +150,59 @@ function gameStart(){
 	});
 }
 
+function deleteLetter(rowBlockEl){
+	if(nextRowBlock > 0){
+		nextRowBlock--;
+		rowBlockEl[nextRowBlock].innerText = '';
+	}
+}
+
+function count(str, find) {
+    return (str.split(find)).length - 1;
+}
+
+function submitWord(wordRow, keyPress){
+	if(nextRowBlock > 0 && nextRowBlock % 5 == 0){
+		let word = wordRow.innerText.replace(/[\n\r]/g, '');
+		if(wordlist.includes(word)){
+			let answer = [];
+			for(i = 0; i < word.length; i++){
+				let letter = word[i].toUpperCase();
+				answer.push(letter);
+				let blockClass = 'blockGrey';
+				if(chosenWord.toUpperCase().includes(letter)){
+					if(chosenWord[i].toUpperCase() === letter){
+						score++;
+						blockClass = ' blockGreen';
+						if(count(word, letter) > count(chosenWord, letter)){
+							for(j = 0; j < wordRow.childNodes.length; j++){
+								if(wordRow.childNodes[j].innerText == letter && wordRow.childNodes[j].className == 'row_block  blockGold'){
+									wordRow.childNodes[j].className = 'row_block  blockGrey';
+									let index = answer.indexOf(letter);
+									if (index !== -1) {
+										answer.splice(index, 1);
+									}
+								}
+							}
+						}
+					}else{
+						if(countOccurrences(answer, letter) <= count(chosenWord, letter)){
+							blockClass = ' blockGold';
+						}
+						else{
+							blockClass = ' blockGrey';
+						}
+					}
+				}
+				wordRow.childNodes[i].className = 'row_block ' + blockClass;
+				let keyboard = document.getElementById('keyboard_' + letter);
+				if(chosenWord.toUpperCase().includes(letter)){
+					keyboard.className += ' blockGreen';
+				}
+				else{
+					keyboard.className += ' blockGrey';
+				}
+			}
+
+			
+}}}
