@@ -46,3 +46,58 @@ html, body{
 	background-color: #dde627;
 }
 
+.logo_green{
+	background-color: #1bcb1b;
+}
+
+.nav_bar{
+	text-align: center;
+	height: 33px;
+	margin-top: 11px;
+}
+
+#giveUpBtn{
+	padding: 7px 10px;
+	font-size: 17px;
+	cursor: pointer;
+	border-radius: 8px;
+}
+
+.game_area{
+	margin-top: 33px;
+}
+
+.row, .row_block{
+	display: flex;
+	justify-content: center;
+	margin: 5px;
+}
+
+.row_block{
+	font-size: 40px;
+	border: 3px dotted;
+	width: 56px;
+	height: 56px;
+	border-radius: 12px;
+}
+
+#notification{
+	font-family: arial;
+	text-align: center;
+	letter-spacing: 1px;
+	font-size: 19px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	height: 22px;
+}
+
+#keyboard{
+	text-align: center;
+	margin-top: 50px;
+}
+
+#topKeys, #midKeys, #botKeys{
+	display: flex;
+	justify-content: center;
+}
+
